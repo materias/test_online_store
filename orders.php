@@ -11,22 +11,22 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Orders</title>
+        <title>Заказы</title>
     </head>
     <body>
 
-        <h2>Orders List</h2>
+        <h2>Список заказов</h2>
         
         <table>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th>ID заказа</th>
+                <th>Имя</th>
                 <th>Email</th>
-                <th>Qty</th>
-                <th>Sum ($)</th>
-                <th>Currency</th>
-                <th>Status</th>
-                <th>Created At</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+                <th>Валюта</th>
+                <th>Статус</th>
+                <th>Заказ создан</th>
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
