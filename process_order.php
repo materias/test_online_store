@@ -31,6 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$orderId, $productName, $price, $qty]);
     }
 
-    $paypalUrl = "";
+    $paypalUrl = $_ENV['PAYPAL_URL'] . urlencode($businessEmail) . "&amount=$orderTotal&currency_code=RUB";
+
+    sendMail($email, "Подтверждение заказа", "Ваш заказ #$orderId ожидает оплаты. Перейдите по <a href='$paypalUrl'>ссылке</a>, чтобы оплатить.");
+    sendMail($_ENV['MAIL_FROM_ADDRES'], "Новый заказ размещен", "Новый заказ #$orderId размещен. Покупатель: $name ($email). Сумма: $$totalSum.");
+
+    echo "Заказ успешно размещен! <a href='$paypalUrl'>Нажмите, чтобы оплатить</a>";
+
 }
 ?>
