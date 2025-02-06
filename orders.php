@@ -30,7 +30,7 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
-                <td><?= $order['id'] ?></td>
+                <td><a href="order_details.php?id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
                 <td><?= htmlspecialchars($order['name']) ?></td>
                 <td><?= htmlspecialchars($order['email']) ?></td>
                 <td><?= $order['qty'] ?></td>
