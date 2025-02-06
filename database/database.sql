@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS shop;
+USE shop;
+
+CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    qty INT NOT NULL,
+    sum DECIMAL(10,2) NOT NULL,
+    currency VARCHAR(10) NOT NULL DEFAULT 'RUB',
+    status ENUM('pending', 'paid', 'canceled') DEFAULT 'pending',
+    token VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_order INT NOT NULL,
+    name_product VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    qty INT NOT NULL,
+    FOREIGN KEY (id_order) REFERENCES orders(id) ON DELETE CASCADE
+);
