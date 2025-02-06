@@ -1,16 +1,23 @@
 <?php
 require '../config.php';
 
-$routes = [
-    '/' => 'views/checkout.php',
-    '/order' => 'pages/order.php',
-    '/orders' => 'pages/orders.php'
-];
+$request = $_GET['route'] ?? '';
 
-$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-if (array_key_exists($path, $routes)) {
-    require $routes[$path];
-} else {
-    http_response_code(404);
-    echo "Page not found.";
+switch ($request) {
+    case '':
+        require '../views/checkout.php';
+        break;
+    case 'order':
+        require '../pages/order.php';
+        break;
+    case 'orders':
+        require '../pages/orders.php';
+        break;
+    case 'order_details':
+        require '../pages/order_details.php';
+        break;
+    default:
+        http_response_code(404);
+        echo "404 - Page not found.";
+        break;
 }

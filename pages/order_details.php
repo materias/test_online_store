@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../config.php';
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Order ID is required.");
@@ -26,7 +26,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Детали заказа</title>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
 
@@ -59,7 +59,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </table>
 
-    <p><a href="orders.php">Назад в Заказы</a></p>
+    <p><a href="<?= BASE_URL ?>?route=orders">Назад в Заказы</a></p>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../config.php';
 
 $sql = "SELECT * FROM orders ORDER BY created_at DESC";
 $result = $pdo->query($sql);
@@ -12,7 +12,7 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Заказы</title>
-        <link rel="stylesheet" href="public/css/styles.css">
+        <link rel="stylesheet" href="../public/css/styles.css">
     </head>
     <body>
 
@@ -31,7 +31,7 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
-                <td><a href="order_details.php?id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
+                <td><a href="<?= BASE_URL ?>?route=order_details&id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
                 <td><?= htmlspecialchars($order['name']) ?></td>
                 <td><?= htmlspecialchars($order['email']) ?></td>
                 <td><?= $order['qty'] ?></td>

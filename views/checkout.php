@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <script src="<?= $_ENV['PAYPAL_LINK']; ?>"></script>

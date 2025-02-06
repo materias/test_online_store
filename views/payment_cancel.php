@@ -1,6 +1,6 @@
 <?php
-require 'config.php';
-require 'mailer.php';
+require '../config.php';
+require '../mailer.php';
 
 if (!isset($_GET['custom'])) {
     die("Неизвестный запрос");

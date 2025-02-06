@@ -1,6 +1,6 @@
 <?php
-require 'config.php';
-require 'mailer.php';
+require '../config.php';
+require '../mailer.php';
 
 $jsonData = file_get_contents('data/orders.json');
 $productsData = json_decode($jsonData, true);

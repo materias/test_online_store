@@ -2,6 +2,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+define('BASE_URL', '/test_online_store/public/');
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -16,4 +18,3 @@ try {
 } catch (PDOException $e) {
     die("Ошибка подключения к базе данных: " . $e->getMessage());
 }
-
