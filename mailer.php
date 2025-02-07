@@ -22,6 +22,9 @@ function sendMail($to, $subject, $body) {
         $mail->setFrom($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']);
         $mail->addAddress($to);
 
+        $mail->CharSet = "UTF-8";
+        $mail->Encoding = "base64";
+
         $mail->isHTML(false);                                
         $mail->Subject = $subject;
         $mail->Body    = $body;
