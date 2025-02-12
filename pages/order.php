@@ -75,12 +75,10 @@ if (file_exists($file_path)) {
 
             formData.append("order_items", JSON.stringify(selectedProducts));
 
-            let response = await fetch("process_order.php", {
+            let response = await fetch("/test_online_store/pages/process_order.php", {
                 method: "POST",
                 body: formData
             });
-
-            console.log('here')
 
             let result = await response.json();
             if (result.status === "success") {

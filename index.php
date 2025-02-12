@@ -25,11 +25,14 @@ switch ($request) {
     case 'orders':
         require 'pages/orders.php';
         break;
-    case (preg_match('/^order_details\?id=\d+$/', $request) ? true : false):
+    case 'process_order':
+        require 'pages/process_order.php';
+        break;        
+    case (preg_match('/^order_details.php\?id=\d+$/', $request) ? true : false):
         require 'pages/order_details.php';
         break;
     default:
         http_response_code(404);
-        echo "404 - Страница не найдена.";
+        echo "404 — Страница не найдена.";
         break;
 }

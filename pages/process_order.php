@@ -1,5 +1,6 @@
 <?php
 require dirname(__DIR__) . '/config.php';
+require dirname(__DIR__) . '/mailer.php';
 
 $clientId = $_ENV['CLIENT_ID'];
 $clientSecret = $_ENV['CLIENT_SECRET'];
@@ -35,9 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$order_id, $item['name_product'], $item['price'], $item['qty']]);
     }
 
-    echo json_encode(["status" => "success", "payment_url" => "process_order.php?token=$token"]);
+    echo json_encode(["status" => "success", "payment_url" => "/test_online_store/pages/process_order.php?token=$token"]);
     exit();
-
 }
 
 if (!isset($_GET['token'])) {
@@ -54,17 +54,34 @@ if (!$order) {
     die("Ошибка: Заказ не найден.");
 }
 
-$order_id = $order['id'];
+$name = $order['name'];
+$email = $order['email'];
 $total_sum = $order['sum'];
+$paypalUrl = "https://www.paypal.com/checkoutnow?token=$token";
 
+$order_id = $order['id'];
+
+sendMail($email, "Подтверждение заказа", "Ваш заказ #$order_id ожидает оплаты. Перейдите по <a href='$paypalUrl'>ссылке</a>, чтобы оплатить.");
+sendMail($_ENV['MAIL_TO_ADDRESS'], "Новый заказ размещен", "Новый заказ #$order_id размещен. Покупатель: $name ($email). Сумма: USD $total_sum.");
+ob_clean();
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оплата заказа</title>
     <script src="https://www.paypal.com/sdk/js?client-id=<?= $clientId ?>&currency=<?= $currency ?>"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Оплатите заказ №<?= $order_id ?></h2>
+        <p class="text-lg text-gray-700 mb-6">Сумма к оплате: <span class="font-bold text-gray-900">$<?= number_format($total_sum, 2) ?> <?= $currency ?></span></p>
+        <div id="paypal-button-container" class="mt-4"></div>
+    </div>
+
     <script>
         function renderPayPalButton() {
             paypal.Buttons({
@@ -91,12 +108,5 @@ $total_sum = $order['sum'];
 
         document.addEventListener("DOMContentLoaded", renderPayPalButton);
     </script>
-</head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md text-center">
-        <h2 class="text-2xl font-semibold mb-4">Оплатите заказ №<?= $order_id ?></h2>
-        <p class="mb-4">Сумма к оплате: <strong>$<?= number_format($total_sum, 2) ?> <?= $currency ?></strong></p>
-        <div id="paypal-button-container"></div>
-    </div>
 </body>
 </html>
