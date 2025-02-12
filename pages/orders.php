@@ -1,5 +1,5 @@
 <?php
-require '../config.php';
+require dirname(__DIR__) . '/config.php';
 
 $sql = "SELECT * FROM orders ORDER BY created_at DESC";
 $result = $pdo->query($sql);
@@ -31,7 +31,7 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
-                <td><a href="<?= BASE_URL ?>?route=order_details&id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
+                <td><a href="/test_online_store/order_details?id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
                 <td><?= htmlspecialchars($order['name']) ?></td>
                 <td><?= htmlspecialchars($order['email']) ?></td>
                 <td><?= $order['qty'] ?></td>

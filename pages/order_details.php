@@ -1,22 +1,21 @@
 <?php
-require '../config.php';
+require dirname(__DIR__) . '/config.php';
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("Order ID is required.");
+    die("Ошибка: отсутствует ID заказа!");
 }
 
-$order_id = (int)$_GET['id'];
-
+$orderId = (int) $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
-$stmt->execute([$order_id]);
+$stmt->execute([$orderId]);
 $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$order) {
-    die("Заказ не найден.");
+    die("Ошибка: заказ не найден!");
 }
 
 $stmt = $pdo->prepare("SELECT * FROM order_items WHERE id_order = ?");
-$stmt->execute([$order_id]);
+$stmt->execute([$orderId]);
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -59,7 +58,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </table>
 
-    <p><a href="<?= BASE_URL ?>?route=orders">Назад в Заказы</a></p>
+    <p><a href="/test_online_store/orders">Назад в Заказы</a></p>
 
 </body>
 </html>
