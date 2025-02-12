@@ -1,27 +1,44 @@
 <?php
-require '../config.php';
+require '../config.php'; 
 require '../mailer.php';
+require '../api/paypal.php';
 
-if (!isset($_GET['custom'])) {
-    die("Неизвестный запрос");
+if (!isset($_GET['orderID'])) {
+    die("Ошибка: Order ID не найден.");
 }
 
-$token = $_GET['custom'];
+$orderID = $_GET['orderID'];
+$token = $_GET['token'] ?? null;
 
-$stmt = $pdo->prepare("SELECT * FROM orders WHERE token = ?");
-$stmt->execute([$token]);
-$order = $stmt->fetch();
+$paypal = new PaypalCheckout();
+$paymentDetails = $paypal->validate($orderID);
 
-if (!$order) {
-    die("Заказ не найден.");
+if (!$paymentDetails || empty($paymentDetails['status'])) {
+    die("Ошибка: Не удалось получить данные о платеже.");
 }
 
-$stmt = $pdo->prepare("UPDATE orders SET status = 'paid' WHERE token = ?");
-$stmt->execute([$token]);
+if ($paymentDetails['status'] !== 'COMPLETED') {
+    die("Ошибка: Оплата не подтверждена.");
+}
 
-sendMail($order['email'], "Оплата получена", "Благодарим за оплату! Ваш заказ #{$order['id']} успешно оплачен.");
+$stmt = $pdo->prepare("UPDATE orders SET status = 'paid', token = ? WHERE token = ?");
+$stmt->execute([$orderID, $token]);
 
-sendMail($_ENV['MAIL_TO_ADDRES'], "Заказ #{$order['id']} Оплачен", "Заказ #{$order['id']} от {$order['name']} ({$order['email']}) успешно оплачен.");
-
-echo "Спасибо! Оплата прошла успешно";
 ?>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата успешна</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md text-center">
+        <h2 class="text-2xl font-semibold mb-4 text-green-600">Оплата прошла успешно!</h2>
+        <p class="mb-4">Ваш заказ №<?= htmlspecialchars($orderID) ?> оплачен.</p>
+        <p>Статус: <strong><?= htmlspecialchars($paymentDetails['status']) ?></strong></p>
+        <a href="index.php" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Вернуться в магазин</a>
+    </div>
+</body>
+</html>

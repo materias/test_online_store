@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS orders (
     email VARCHAR(255) NOT NULL,
     qty INT NOT NULL,
     sum DECIMAL(10,2) NOT NULL,
-    currency VARCHAR(10) NOT NULL DEFAULT 'RUB',
+    currency VARCHAR(10) NOT NULL DEFAULT 'USD',
     status ENUM('pending', 'paid', 'canceled') DEFAULT 'pending',
     token VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
