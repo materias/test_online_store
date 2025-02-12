@@ -7,43 +7,52 @@ $orders = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Заказы</title>
-        <link rel="stylesheet" href="../public/css/styles.css">
-    </head>
-    <body>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список заказов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Список заказов</h2>
 
-        <h2>Список заказов</h2>
-        
-        <table>
-            <tr>
-                <th>ID заказа</th>
-                <th>Имя</th>
-                <th>Email</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-                <th>Валюта</th>
-                <th>Статус</th>
-                <th>Заказ создан</th>
-            </tr>
-            <?php foreach ($orders as $order): ?>
-            <tr>
-                <td><a href="/test_online_store/order_details?id=<?= $order['id'] ?>"><?= $order['id'] ?></a></td>
-                <td><?= htmlspecialchars($order['name']) ?></td>
-                <td><?= htmlspecialchars($order['email']) ?></td>
-                <td><?= $order['qty'] ?></td>
-                <td><?= number_format($order['sum'], 2) ?></td>
-                <td><?= $order['currency'] ?></td>
-                <td class="<?= $order['status'] == 'paid' ? 'paid' : 'canceled' ?>">
-                    <?= ucfirst($order['status']) ?>
-                </td>
-                <td><?= $order['created_at'] ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-
-    </body>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 border">ID заказа</th>
+                        <th class="px-4 py-2 border">Имя</th>
+                        <th class="px-4 py-2 border">Email</th>
+                        <th class="px-4 py-2 border">Количество</th>
+                        <th class="px-4 py-2 border">Сумма</th>
+                        <th class="px-4 py-2 border">Валюта</th>
+                        <th class="px-4 py-2 border">Статус</th>
+                        <th class="px-4 py-2 border">Дата заказа</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr class="border hover:bg-gray-100 transition">
+                            <td class="px-4 py-2 border">
+                                <a href="pages/order_details.php?id=<?= $order['id'] ?>" class="text-blue-600 hover:underline"><?= $order['id'] ?></a>
+                            </td>
+                            <td class="px-4 py-2 border"><?= htmlspecialchars($order['name']) ?></td>
+                            <td class="px-4 py-2 border"><?= htmlspecialchars($order['email']) ?></td>
+                            <td class="px-4 py-2 border"><?= $order['qty'] ?></td>
+                            <td class="px-4 py-2 border">$<?= number_format($order['sum'], 2) ?></td>
+                            <td class="px-4 py-2 border"><?= $order['currency'] ?></td>
+                            <td class="px-4 py-2 border font-semibold 
+                                <?= $order['status'] == 'paid' ? 'text-green-600' : ($order['status'] == 'cancelled' ? 'text-red-600' : 'text-gray-500') ?>">
+                                <?= ucfirst($order['status']) ?>
+                            </td>
+                            <td class="px-4 py-2 border"><?= $order['created_at'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
 </html>
