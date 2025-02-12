@@ -1,7 +1,7 @@
 <?php
 require dirname(__DIR__) . '/config.php';
+require '../api/paypal.php';
 require dirname(__DIR__) . '/mailer.php';
-require dirname(__DIR__) . '/paypal.php';
 
 if (!isset($_GET['orderID'])) {
     die("Ошибка: Order ID не найден.");

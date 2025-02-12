@@ -1,5 +1,6 @@
 <?php
 require dirname(__DIR__) . '/config.php';
+require '../api/paypal.php';
 require dirname(__DIR__) . '/mailer.php';
 
 if (!isset($_GET['token'])) {

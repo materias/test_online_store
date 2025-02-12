@@ -1,5 +1,5 @@
 <?php 
-include '../config.php';
+require dirname(__DIR__) . '/config.php';
 
 class PaypalCheckout{ 
     public $paypalAuthAPI   = 'https://api-m.sandbox.paypal.com/v1/oauth2/token';

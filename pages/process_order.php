@@ -97,11 +97,11 @@ ob_clean();
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
-                        window.location.href = "../views/payment_success.php?token=<?= $token ?>&orderID=" + details.id;
+                        window.location.href = "test_online_store/views/payment_success.php?token=<?= $token ?>&orderID=" + details.id;
                     });
                 },
                 onCancel: function(data) {
-                    window.location.href = "../views/payment_cancel.php?token=<?= $token ?>";
+                    window.location.href = "test_online_store/views/payment_cancel.php?token=<?= $token ?>";
                 }
             }).render('#paypal-button-container');
         }
