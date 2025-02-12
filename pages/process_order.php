@@ -1,5 +1,5 @@
 <?php
-require '../config.php';
+require dirname(__DIR__) . '/config.php';
 
 $clientId = $_ENV['CLIENT_ID'];
 $clientSecret = $_ENV['CLIENT_SECRET'];

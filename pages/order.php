@@ -1,6 +1,14 @@
 <?php
-$products_json = file_get_contents('../data/orders.json');
-$products = json_decode($products_json, true);
+require dirname(__DIR__) . '/config.php';
+
+$file_path = dirname(__DIR__) . '/data/orders.json';
+
+if (file_exists($file_path)) {
+    $json = file_get_contents($file_path);
+    $products = json_decode($json, true);
+} else {
+    $products = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +31,7 @@ $products = json_decode($products_json, true);
             <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
             <br>
 
-            <h3 class="text-xl font-bold mt-4">Выберите товары:</h3>
+            <h3 class="text-xl font-bold mt-4 mb-4">Выберите товары:</h3>
             <div class="grid gap-4">
                 <?php foreach ($products as $product): ?>
                     <label class="flex items-center gap-4 p-4 border rounded-lg shadow-md bg-white">

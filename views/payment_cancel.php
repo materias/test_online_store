@@ -33,8 +33,8 @@ $stmt->execute([$token]);
     <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md text-center">
         <h2 class="text-2xl font-semibold mb-4 text-red-600">Оплата отменена</h2>
         <p class="mb-4">Вы отменили оплату заказа №<?= $order['id'] ?>.</p>
-        <p>Если это ошибка, попробуйте снова.</p>
-        <a href="../pages/order.php" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">Вернуться в магазин</a>
+        <p class="mb-4">Если это ошибка, попробуйте снова.</p>
+        <a href="../order" class="mt-8 bg-gray-500 text-white px-4 py-2 rounded">Разместить еще один заказ</a>
     </div>
 </body>
 </html>

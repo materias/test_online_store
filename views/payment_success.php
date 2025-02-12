@@ -37,8 +37,8 @@ $stmt->execute([$orderID, $token]);
     <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md text-center">
         <h2 class="text-2xl font-semibold mb-4 text-green-600">Оплата прошла успешно!</h2>
         <p class="mb-4">Ваш заказ №<?= htmlspecialchars($orderID) ?> оплачен.</p>
-        <p>Статус: <strong><?= htmlspecialchars($paymentDetails['status']) ?></strong></p>
-        <a href="index.php" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Вернуться в магазин</a>
+        <p class="mb-4">Статус: <strong><?= htmlspecialchars($paymentDetails['status']) ?></strong></p>
+        <a href="../order" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Сделать еще один заказ</a>
     </div>
 </body>
 </html>
